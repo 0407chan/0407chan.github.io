@@ -18,10 +18,10 @@ tagline:             상어는 영어로 죠습니다
 # A short description of the page, used in the sidebar and as fallback for the meta description tag.
 # Markdown enabled, but don't use more than one paragraph (enforced by `>`)
 description:         >
-  이찬호 블로그읍니다.
+  이찬호 블로그입니다.
 
 # This should be the same author as first entry in `_data/authors.yml`
-author:
+author:ㅡ
   name:              Chris Rhee
   email:             0407chan@naver.com
 

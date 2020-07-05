@@ -20,10 +20,7 @@ categories: jekyll update
 - massege가 있다.
 - 커밋은 자신의 이전 커밋 즉, 부모 커밋이 있따.
 
-
-
 # github
 - social coding
 - open source platform
 - github 전에 나온것은? 
-    - 

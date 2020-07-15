@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "회사 분위기"
+title: "[JavaScript] 우테캠 질의응답 프론트 팁"
 date: 2020-07-10 15:00:00 +0900
 categories: jekyll update
 ---

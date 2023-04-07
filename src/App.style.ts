@@ -9,13 +9,13 @@ export const Container = styled.div`
   width: 100vw;
   height: 100vh;
   // dark mode background
-  background-color: #1e1e1e;
+  background-color: ${({ theme }) => theme.background};
 
   // light mode background
   // background-color: #f5f5f5;
 
   // dark mode text
-  color: #f5f5f5;
+  color: ${({ theme }) => theme.text};
 
   // light mode text
   // color: #1e1e1e;

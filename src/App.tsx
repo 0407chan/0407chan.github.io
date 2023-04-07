@@ -1,6 +1,6 @@
 import { Container } from 'App.style'
 
-function App() {
+export default function App() {
   return (
     <Container>
       <h1>반가워요</h1>
@@ -9,5 +9,3 @@ function App() {
     </Container>
   )
 }
-
-export default App

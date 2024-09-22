@@ -7,9 +7,9 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "bun build && git add . && git commit -m '배포' && git push origin main",
-    "test": "bun vitest",
-    "coverage": "bun vitest run --coverage"
+    "deploy": "bun run build && git add . && git commit -m '배포' && git push origin main",
+    "test": "bun run vitest",
+    "coverage": "bun run vitest run --coverage"
   },
   "dependencies": {
     "@swc/helpers": "^0.5.0",

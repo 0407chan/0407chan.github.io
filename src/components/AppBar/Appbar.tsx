@@ -1,18 +1,31 @@
-import React from 'react'
+import Horizontal from 'components/Horizontal'
+import dayjs from 'dayjs'
+import React, { useEffect, useState } from 'react'
 import styles from './AppBar.module.scss'
 
+const TIME_FORMAT = 'M월 D일 (ddd) A H:mm:ss'
+
 const AppBar: React.FC = () => {
+  const [time, setTime] = useState(dayjs().format(TIME_FORMAT))
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(dayjs().format(TIME_FORMAT))
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
+
   return (
-    <div className={styles.appBar}>
-      <div className={styles.menu}>
-        <span>File</span>
-        <span>Edit</span>
-        <span>View</span>
-        <span>Go</span>
-        <span>Window</span>
-        <span>Help</span>
-      </div>
-    </div>
+    <Horizontal className={styles.appBar}>
+      <Horizontal className={styles.menu}>
+        <span style={{ fontWeight: 'bold' }}>Chanho</span>
+      </Horizontal>
+
+      <Horizontal>
+        <span>{time}</span>
+      </Horizontal>
+    </Horizontal>
   )
 }
 

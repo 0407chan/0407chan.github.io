@@ -1,11 +1,15 @@
-import AppBar from 'components/AppBar/Appbar'
+import AppBar from 'components/AppBar/AppBar'
 import Dock from 'components/Dock/Dock'
 import Vertical from 'components/Vertical'
 import { IMAGES } from 'constants/image'
 import { darkTheme, lightTheme } from 'constants/themes'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ko'
 import { useDarkMode } from 'hooks/useDarkMode'
 import { ThemeProvider } from 'styled-components'
 import styles from './App.module.scss'
+
+dayjs.locale('ko')
 
 export default function App() {
   const { theme, themeToggler } = useDarkMode()

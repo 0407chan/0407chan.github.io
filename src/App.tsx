@@ -1,4 +1,4 @@
-import Appbar from 'components/AppBar/Appbar'
+import AppBar from 'components/AppBar/Appbar'
 import Dock from 'components/Dock/Dock'
 import Vertical from 'components/Vertical'
 import { IMAGES } from 'constants/image'
@@ -16,7 +16,7 @@ export default function App() {
         className={styles.app}
         style={{ backgroundImage: `url(${IMAGES.BACKGROUND.DEAD_SEA})` }}
       >
-        <Appbar />
+        <AppBar />
         <Vertical className={styles.content}> </Vertical>
         <Dock />
       </div>

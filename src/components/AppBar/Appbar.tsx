@@ -1,10 +1,9 @@
 import React from 'react'
-import styles from './Appbar.module.scss'
+import styles from './AppBar.module.scss'
 
-const Appbar: React.FC = () => {
+const AppBar: React.FC = () => {
   return (
-    <div className={styles.appbar}>
-      {/* Appbar content will go here */}
+    <div className={styles.appBar}>
       <div className={styles.menu}>
         <span>File</span>
         <span>Edit</span>
@@ -17,4 +16,4 @@ const Appbar: React.FC = () => {
   )
 }
 
-export default Appbar
+export default AppBar

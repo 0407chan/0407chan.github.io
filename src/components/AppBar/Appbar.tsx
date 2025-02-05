@@ -1,4 +1,4 @@
-import { Combobox, useCombobox } from '@mantine/core'
+import { Menu } from '@mantine/core'
 import Horizontal from 'components/Horizontal'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -8,11 +8,6 @@ const TIME_FORMAT = 'M월 D일 (ddd) A H:mm:ss'
 
 const AppBar: React.FC = () => {
   const [time, setTime] = useState(dayjs().format(TIME_FORMAT))
-  const [selectedItem, setSelectedItem] = useState<string | null>(null)
-
-  const combobox = useCombobox({
-    onDropdownClose: () => combobox.resetSelectedOption()
-  })
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -25,12 +20,11 @@ const AppBar: React.FC = () => {
   return (
     <Horizontal className={styles.appBar}>
       <Horizontal className={styles.menu}>
-        <Combobox
-          store={combobox}
+        <Menu
           width={250}
           position="bottom"
           classNames={{
-            option: styles.option
+            item: styles.option
           }}
           styles={{
             dropdown: {
@@ -41,33 +35,16 @@ const AppBar: React.FC = () => {
                 '0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08)'
             }
           }}
-          onOptionSubmit={(val) => {
-            setSelectedItem(val)
-            combobox.closeDropdown()
-          }}
         >
-          <Combobox.Target>
-            <span
-              style={{ fontWeight: 'bold' }}
-              onClick={() => combobox.toggleDropdown()}
-            >
-              Chanho
-            </span>
-          </Combobox.Target>
-
-          <Combobox.Dropdown>
-            <Combobox.Options>
-              <Combobox.Option value="이 chanho에 관하여">
-                이 chanho에 관하여
-              </Combobox.Option>
-              <Combobox.Group label=" ">
-                <Combobox.Option value="시스템 설정...">
-                  시스템 설정...
-                </Combobox.Option>
-              </Combobox.Group>
-            </Combobox.Options>
-          </Combobox.Dropdown>
-        </Combobox>
+          <Menu.Target>
+            <span style={{ fontWeight: 'bold' }}>Chanho</span>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item value="이 Chanho에 관하여">이 Chanho에 관하여</Menu.Item>
+            <Menu.Divider />
+            <Menu.Item value="시스템 설정...">시스템 설정...</Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
       </Horizontal>
 
       <Horizontal>

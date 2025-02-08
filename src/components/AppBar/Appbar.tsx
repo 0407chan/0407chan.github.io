@@ -1,5 +1,7 @@
 import { Menu } from '@mantine/core'
 import Horizontal from 'components/Horizontal'
+import SettingModal from 'components/SettingModal'
+import { useModal } from 'contexts/modal/useModal'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
 import styles from './AppBar.module.scss'
@@ -8,6 +10,7 @@ const TIME_FORMAT = 'M월 D일 (ddd) A H:mm:ss'
 
 const AppBar: React.FC = () => {
   const [time, setTime] = useState(dayjs().format(TIME_FORMAT))
+  const { openModal, closeModal } = useModal()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -28,11 +31,11 @@ const AppBar: React.FC = () => {
           }}
           styles={{
             dropdown: {
-              backgroundColor: 'rgba(236, 235, 238, 0.8)',
+              backgroundColor: 'rgba(236, 235, 238, 0.7)',
               border: '1px solid #A19F9D',
               backdropFilter: 'blur(10px)',
               boxShadow:
-                '0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08)'
+                '0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08), inset 0 0px 1px rgba(255, 255, 255, 0.3)'
             }
           }}
         >
@@ -41,8 +44,18 @@ const AppBar: React.FC = () => {
           </Menu.Target>
           <Menu.Dropdown>
             <Menu.Item value="이 Chanho에 관하여">이 Chanho에 관하여</Menu.Item>
-            <Menu.Divider />
-            <Menu.Item value="시스템 설정...">시스템 설정...</Menu.Item>
+            <Menu.Divider style={{ borderColor: '#BEB9B4' }} />
+            <Menu.Item
+              value="시스템 설정..."
+              onClick={() =>
+                openModal({
+                  title: '시스템 설정',
+                  content: <SettingModal />
+                })
+              }
+            >
+              시스템 설정...
+            </Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </Horizontal>

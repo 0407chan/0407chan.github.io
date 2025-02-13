@@ -31,8 +31,8 @@ const AppBar: React.FC = () => {
           }}
           styles={{
             dropdown: {
-              backgroundColor: 'rgba(236, 235, 238, 0.7)',
-              border: '1px solid #A19F9D',
+              backgroundColor: '#efefefe7',
+              border: '0.5px solid #A4A4A4',
               backdropFilter: 'blur(10px)',
               boxShadow:
                 '0 4px 8px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.08), inset 0 0px 1px rgba(255, 255, 255, 0.3)'

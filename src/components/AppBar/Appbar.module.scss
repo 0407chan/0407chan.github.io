@@ -1,5 +1,5 @@
 .appBar {
-  height: 28px;
+  height: 40px;
   background: rgba(236, 236, 236, 0.7);
   backdrop-filter: blur(12px);
   display: flex;
@@ -33,7 +33,7 @@
   padding: 0px 8px !important;
 
   &:hover {
-    background-color: #4c9afe !important;
+    background-color: #62a6ff !important;
     color: white;
   }
 }

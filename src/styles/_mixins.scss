@@ -1,0 +1,35 @@
+@use 'variables' as *;
+
+@mixin macos-window {
+  background: $light-bg;
+  backdrop-filter: blur(12px);
+  border-radius: 10px;
+  border: 0.5px solid $border-color;
+  box-shadow: $shadow;
+
+  [data-theme='dark'] & {
+    background: $dark-bg;
+  }
+}
+
+@mixin macos-header {
+  background: $light-header-bg;
+  user-select: none;
+
+  [data-theme='dark'] & {
+    background: $dark-header-bg;
+  }
+}
+
+@mixin window-control-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

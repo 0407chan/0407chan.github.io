@@ -1,3 +1,5 @@
+@use '../../styles' as *;
+
 .backdrop {
   position: fixed;
   top: 0;
@@ -15,18 +17,10 @@
   top: 0;
   min-width: 500px;
   min-height: 300px;
-  background: rgba(236, 236, 236, 0.7);
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  @include macos-window;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-
-  [data-theme='dark'] & {
-    background: rgba(40, 40, 40, 0.7);
-  }
-
   z-index: 2000;
 
   &:not(.focused) {
@@ -35,17 +29,12 @@
 }
 
 .header {
-  height: 28px;
+  height: $modal-header-height;
   padding: 8px 12px;
   display: flex;
   align-items: center;
-  background: rgba(236, 236, 236, 0.5);
+  @include macos-header;
   cursor: move;
-  user-select: none;
-
-  [data-theme='dark'] & {
-    background: rgba(50, 50, 50, 0.5);
-  }
 }
 
 .controls {
@@ -55,27 +44,18 @@
 }
 
 .button {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.8;
-  }
+  @include window-control-button;
 
   &.close {
-    background: #ff5f56;
+    background: $close-button;
   }
 
   &.minimize {
-    background: #ffbd2e;
+    background: $minimize-button;
   }
 
   &.maximize {
-    background: #27c93f;
+    background: $maximize-button;
   }
 }
 
@@ -83,10 +63,10 @@
   flex: 1;
   text-align: center;
   font-size: 13px;
-  color: #333;
+  color: $light-text;
 
   [data-theme='dark'] & {
-    color: #fff;
+    color: $dark-text;
   }
 }
 

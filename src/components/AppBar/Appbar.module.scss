@@ -1,7 +1,9 @@
+@use '../../styles' as *;
+
 .appBar {
-  height: 40px;
-  background: rgba(236, 236, 236, 0.7);
-  backdrop-filter: blur(12px);
+  height: $appbar-height;
+  @include macos-window;
+  border-radius: unset;
   display: flex;
   align-items: center;
   justify-content: space-between;

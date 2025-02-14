@@ -1,6 +1,7 @@
 import { Menu } from '@mantine/core'
 import Horizontal from 'components/Horizontal'
-import SettingModal from 'components/SettingModal'
+import Vertical from 'components/Vertical'
+import { ModalType } from 'contexts/modal/modalTypes'
 import { useModal } from 'contexts/modal/useModal'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -10,7 +11,7 @@ const TIME_FORMAT = 'M월 D일 (ddd) A H:mm:ss'
 
 const AppBar: React.FC = () => {
   const [time, setTime] = useState(dayjs().format(TIME_FORMAT))
-  const { openModal, closeModal } = useModal()
+  const { openModal } = useModal()
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -43,14 +44,40 @@ const AppBar: React.FC = () => {
             <span style={{ fontWeight: 'bold' }}>Chanho</span>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Item value="이 Chanho에 관하여">이 Chanho에 관하여</Menu.Item>
+            <Menu.Item
+              value="이 Chanho에 관하여"
+              onClick={() =>
+                openModal({
+                  type: ModalType.PROFILE,
+                  content: (
+                    <Vertical>
+                      이찬호에 관하여
+                      <Vertical>반가워요</Vertical>
+                      <Vertical>반가워요</Vertical>
+                      <Vertical>반가워요</Vertical>
+                      <Vertical>반가워요</Vertical>
+                    </Vertical>
+                  )
+                })
+              }
+            >
+              이 Chanho에 관하여
+            </Menu.Item>
             <Menu.Divider style={{ borderColor: '#BEB9B4' }} />
             <Menu.Item
               value="시스템 설정..."
               onClick={() =>
                 openModal({
-                  title: '시스템 설정',
-                  content: <SettingModal />
+                  type: ModalType.SETTINGS,
+                  content: (
+                    <Vertical>
+                      안녕하세요?
+                      <Vertical>반가워요</Vertical>
+                      <Vertical>반가워요</Vertical>
+                      <Vertical>반가워요</Vertical>
+                      <Vertical>반가워요</Vertical>
+                    </Vertical>
+                  )
                 })
               }
             >

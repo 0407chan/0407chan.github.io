@@ -44,9 +44,10 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       config: Omit<ModalConfig, 'id' | 'zIndex' | 'type'> & { type: ModalType }
     ) => {
       const modalConfig = MODAL_CONFIGS[config.type]
+      const isSingleton = modalConfig.isSingleton ?? true
 
       // 싱글톤 모달 처리
-      if (modalConfig.isSingleton) {
+      if (isSingleton) {
         const existingId = singletonModals[config.type]
         if (existingId && modals[existingId]) {
           focusModal(existingId)
@@ -58,7 +59,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       const newZIndex = getTopZIndex()
 
       // 싱글톤 모달인 경우 ID 저장
-      if (modalConfig.isSingleton) {
+      if (isSingleton) {
         setSingletonModals((prev) => ({
           ...prev,
           [config.type]: id
@@ -95,7 +96,9 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       })
 
       // 싱글톤 모달인 경우 ID 제거
-      if (MODAL_CONFIGS[modalToClose.type].isSingleton) {
+      const modalConfig = MODAL_CONFIGS[modalToClose.type]
+      const isSingleton = modalConfig.isSingleton ?? true
+      if (isSingleton) {
         setSingletonModals((prev) => {
           const newSingletonModals = { ...prev }
           delete newSingletonModals[modalToClose.type]

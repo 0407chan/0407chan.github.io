@@ -10,6 +10,8 @@ interface ModalProps {
   className?: string
   style?: React.CSSProperties
   isFocused?: boolean
+  disableMaximize?: boolean
+  disableMinimize?: boolean
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -18,7 +20,9 @@ const Modal: React.FC<ModalProps> = ({
   children,
   className,
   style,
-  isFocused = true
+  isFocused = true,
+  disableMaximize = false,
+  disableMinimize = false
 }) => {
   const { closeModal, focusModal } = useModal()
   const [position, setPosition] = useState({ x: 0, y: 0 })
@@ -91,8 +95,16 @@ const Modal: React.FC<ModalProps> = ({
             className={clsx(styles.button, styles.close)}
             onClick={() => closeModal(modalId)}
           />
-          <button className={clsx(styles.button, styles.minimize)} />
-          <button className={clsx(styles.button, styles.maximize)} />
+          <button
+            className={clsx(styles.button, styles.minimize, {
+              [styles.disabled]: disableMinimize
+            })}
+          />
+          <button
+            className={clsx(styles.button, styles.maximize, {
+              [styles.disabled]: disableMaximize
+            })}
+          />
         </div>
         <div className={styles.title}>{title}</div>
       </div>

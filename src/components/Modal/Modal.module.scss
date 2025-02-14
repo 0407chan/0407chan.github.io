@@ -57,6 +57,12 @@
   &.maximize {
     background: $maximize-button;
   }
+
+  &.disabled {
+    background: $disabled-button;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .title {

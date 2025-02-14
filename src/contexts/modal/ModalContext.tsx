@@ -8,6 +8,9 @@ export interface ModalConfig {
   content: React.ReactNode
   className?: string
   zIndex?: number
+
+  disableMaximize?: boolean
+  disableMinimize?: boolean
 }
 
 interface ModalContextType {

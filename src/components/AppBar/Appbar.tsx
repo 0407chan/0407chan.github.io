@@ -49,10 +49,11 @@ const AppBar: React.FC = () => {
               onClick={() =>
                 openModal({
                   type: ModalType.PROFILE,
+                  disableMinimize: true,
+                  disableMaximize: true,
                   content: (
                     <Vertical>
                       이찬호에 관하여
-                      <Vertical>반가워요</Vertical>
                       <Vertical>반가워요</Vertical>
                       <Vertical>반가워요</Vertical>
                       <Vertical>반가워요</Vertical>

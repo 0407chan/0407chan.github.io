@@ -129,8 +129,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         <Modal
           key={modalConfig.id}
           modalId={modalConfig.id}
-          title={modalConfig.title}
-          className={modalConfig.className}
+          {...modalConfig}
           style={{ zIndex: modalConfig.zIndex }}
           isFocused={focusedId === modalConfig.id}
         >

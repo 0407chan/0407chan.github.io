@@ -1,5 +1,7 @@
 import { DefaultMantineColor, Tooltip, TransitionProps } from '@mantine/core'
 import { IMAGES } from 'constants/image'
+import { ModalType } from 'contexts/modal/modalTypes'
+import { useModal } from 'contexts/modal/useModal'
 import styles from './Dock.module.scss'
 
 const COMMON_TOOLTIP_PROPS = {
@@ -17,20 +19,45 @@ const COMMON_TOOLTIP_PROPS = {
   }
 }
 const Dock = () => {
+  const { openModal } = useModal()
   return (
     <div className={styles.dock}>
       <Tooltip label="Monotask" {...COMMON_TOOLTIP_PROPS}>
-        <div className={styles.icon}>
+        <div
+          className={styles.icon}
+          onClick={() =>
+            openModal({
+              type: ModalType.PROJECT_MONOTASK,
+              content: <div>test</div>
+            })
+          }
+        >
           <img src={IMAGES.SERVICE.MONOTASK} alt="monotask" />
         </div>
       </Tooltip>
       <Tooltip label="Respring" {...COMMON_TOOLTIP_PROPS}>
-        <div className={styles.icon}>
+        <div
+          className={styles.icon}
+          onClick={() =>
+            openModal({
+              type: ModalType.PROJECT_RESPRING,
+              content: <div>test</div>
+            })
+          }
+        >
           <img src={IMAGES.SERVICE.RESPRING} alt="respring" />
         </div>
       </Tooltip>
       <Tooltip label="Zemo" {...COMMON_TOOLTIP_PROPS}>
-        <div className={styles.icon}>
+        <div
+          className={styles.icon}
+          onClick={() =>
+            openModal({
+              type: ModalType.PROJECT_ZEMO,
+              content: <div>test</div>
+            })
+          }
+        >
           <img src={IMAGES.SERVICE.ZEMO} alt="zemo" />
         </div>
       </Tooltip>

@@ -25,17 +25,12 @@ const Modal: React.FC<ModalProps> = ({
   disableMinimize = false
 }) => {
   const { closeModal, focusModal } = useModal()
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+  const [position, setPosition] = useState({
+    x: window.innerWidth / 2 - 250,
+    y: window.innerHeight / 2 - 150
+  })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    // 모달이 처음 마운트될 때 중앙 정렬
-    setPosition({
-      x: window.innerWidth / 2 - 250,
-      y: window.innerHeight / 2 - 150
-    })
-  }, [])
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)

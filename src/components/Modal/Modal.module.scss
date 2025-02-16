@@ -34,7 +34,6 @@
   display: flex;
   align-items: center;
   @include macos-header;
-  cursor: move;
 }
 
 .controls {
@@ -61,7 +60,6 @@
   &.disabled {
     background: $disabled-button;
     opacity: 0.5;
-    cursor: not-allowed;
   }
 }
 

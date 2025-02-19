@@ -137,6 +137,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           {...modalConfig}
           style={{ zIndex: modalConfig.zIndex }}
           isFocused={focusedId === modalConfig.id}
+          initialPosition={modalConfig.initialPosition}
         >
           {modalConfig.content}
         </Modal>

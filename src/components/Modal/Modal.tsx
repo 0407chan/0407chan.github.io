@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useModal } from 'contexts/modal/useModal'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ModalHeader from './components/ModalHeader'
 import styles from './styles/Modal.module.scss'
 
@@ -13,6 +13,7 @@ interface ModalProps {
   isFocused?: boolean
   disableMaximize?: boolean
   disableMinimize?: boolean
+  initialPosition?: { x: number; y: number }
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -23,15 +24,38 @@ const Modal: React.FC<ModalProps> = ({
   style,
   isFocused = true,
   disableMaximize = false,
-  disableMinimize = false
+  disableMinimize = false,
+  initialPosition
 }) => {
   const { closeModal, focusModal } = useModal()
-  const [position, setPosition] = useState({
-    x: window.innerWidth / 2,
-    y: window.innerHeight / 2
+  const modalRef = useRef<HTMLDivElement>(null)
+  const [modalSize, setModalSize] = useState({ width: 0, height: 0 })
+  const [position, setPosition] = useState(() => {
+    if (initialPosition) return initialPosition
+
+    return {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2
+    }
   })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
+
+  // 모달 크기 측정
+  useEffect(() => {
+    if (modalRef.current) {
+      const { width, height } = modalRef.current.getBoundingClientRect()
+      setModalSize({ width, height })
+
+      // 초기 위치가 지정되지 않은 경우 중앙 정렬
+      if (!initialPosition) {
+        setPosition({
+          x: window.innerWidth / 2 - width / 2,
+          y: window.innerHeight / 2 - height / 2
+        })
+      }
+    }
+  }, [initialPosition])
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true)
@@ -48,8 +72,8 @@ const Modal: React.FC<ModalProps> = ({
       const newY = e.clientY - dragStart.y
 
       // 화면 경계 체크
-      const maxX = window.innerWidth - 500 // 모달의 너비
-      const maxY = window.innerHeight - 300 // 모달의 높이
+      const maxX = window.innerWidth - modalSize.width
+      const maxY = window.innerHeight - modalSize.height
 
       setPosition({
         x: Math.min(Math.max(0, newX), maxX),
@@ -76,6 +100,7 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
+      ref={modalRef}
       className={clsx(styles.modal, className, {
         [styles.focused]: isFocused
       })}

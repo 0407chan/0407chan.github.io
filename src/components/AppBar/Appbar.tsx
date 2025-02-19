@@ -1,7 +1,7 @@
 import { Menu } from '@mantine/core'
 import Horizontal from 'components/Horizontal'
 import Vertical from 'components/Vertical'
-import { ModalType } from 'contexts/modal/modalTypes'
+import { ModalCategory } from 'contexts/modal/modalDefinitions'
 import { useModal } from 'contexts/modal/useModal'
 import dayjs from 'dayjs'
 import React, { useEffect, useState } from 'react'
@@ -48,7 +48,7 @@ const AppBar: React.FC = () => {
               value="이 Chanho에 관하여"
               onClick={() =>
                 openModal({
-                  type: ModalType.PROFILE,
+                  category: ModalCategory.PROFILE,
                   disableMinimize: true,
                   disableMaximize: true,
                   content: (
@@ -69,7 +69,7 @@ const AppBar: React.FC = () => {
               value="시스템 설정..."
               onClick={() =>
                 openModal({
-                  type: ModalType.SETTINGS,
+                  category: ModalCategory.SETTINGS,
                   content: (
                     <Vertical>
                       안녕하세요?

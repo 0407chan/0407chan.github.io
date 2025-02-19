@@ -1,6 +1,7 @@
 import { DefaultMantineColor, Tooltip, TransitionProps } from '@mantine/core'
+import ModalContent from 'components/Modal/components/ModalContent'
 import { IMAGES } from 'constants/image'
-import { ModalType } from 'contexts/modal/modalTypes'
+import { ModalCategory, ModalVariant } from 'contexts/modal/modalDefinitions'
 import { useModal } from 'contexts/modal/useModal'
 import styles from './Dock.module.scss'
 
@@ -27,8 +28,12 @@ const Dock = () => {
           className={styles.icon}
           onClick={() =>
             openModal({
-              type: ModalType.PROJECT_MONOTASK,
-              content: <div>test</div>
+              category: ModalCategory.PROJECT_MONOTASK,
+              content: (
+                <ModalContent variant={ModalVariant.EXPANDED}>
+                  test
+                </ModalContent>
+              )
             })
           }
         >
@@ -40,8 +45,12 @@ const Dock = () => {
           className={styles.icon}
           onClick={() =>
             openModal({
-              type: ModalType.PROJECT_RESPRING,
-              content: <div>test</div>
+              category: ModalCategory.PROJECT_RESPRING,
+              content: (
+                <ModalContent variant={ModalVariant.EXPANDED}>
+                  test
+                </ModalContent>
+              )
             })
           }
         >
@@ -53,8 +62,12 @@ const Dock = () => {
           className={styles.icon}
           onClick={() =>
             openModal({
-              type: ModalType.PROJECT_ZEMO,
-              content: <div>test</div>
+              category: ModalCategory.PROJECT_ZEMO,
+              content: (
+                <ModalContent variant={ModalVariant.EXPANDED}>
+                  test
+                </ModalContent>
+              )
             })
           }
         >

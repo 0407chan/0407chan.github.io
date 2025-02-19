@@ -1,7 +1,7 @@
 import Modal from 'components/Modal'
 import React, { useCallback, useState } from 'react'
 import { ModalConfig, ModalContext } from './ModalContext'
-import { MODAL_CONFIGS, MODAL_TITLES, ModalType } from './modalTypes'
+import { MODAL_CONFIGS, MODAL_TITLES, ModalCategory } from './modalDefinitions'
 
 const generateId = () =>
   `modal-${Date.now()}-${Math.random().toString(36).slice(2)}`
@@ -14,7 +14,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [modals, setModals] = useState<{ [key: string]: ModalConfig }>({})
   const [focusedId, setFocusedId] = useState<string | null>(null)
   const [singletonModals, setSingletonModals] = useState<{
-    [key in ModalType]?: string
+    [key in ModalCategory]?: string
   }>({})
 
   const getTopZIndex = useCallback(() => {
@@ -41,14 +41,16 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
 
   const openModal = useCallback(
     (
-      config: Omit<ModalConfig, 'id' | 'zIndex' | 'type'> & { type: ModalType }
+      config: Omit<ModalConfig, 'id' | 'zIndex' | 'category'> & {
+        category: ModalCategory
+      }
     ) => {
-      const modalConfig = MODAL_CONFIGS[config.type]
+      const modalConfig = MODAL_CONFIGS[config.category]
       const isSingleton = modalConfig.isSingleton ?? true
 
       // 싱글톤 모달 처리
       if (isSingleton) {
-        const existingId = singletonModals[config.type]
+        const existingId = singletonModals[config.category]
         if (existingId && modals[existingId]) {
           focusModal(existingId)
           return existingId
@@ -62,7 +64,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       if (isSingleton) {
         setSingletonModals((prev) => ({
           ...prev,
-          [config.type]: id
+          [config.category]: id
         }))
       }
 
@@ -72,7 +74,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           ...config,
           id,
           zIndex: newZIndex,
-          title: config.title || MODAL_TITLES[config.type],
+          title: config.title || MODAL_TITLES[config.category],
           className: `${modalConfig.defaultClassName || ''} ${
             config.className || ''
           }`
@@ -96,12 +98,12 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       })
 
       // 싱글톤 모달인 경우 ID 제거
-      const modalConfig = MODAL_CONFIGS[modalToClose.type]
+      const modalConfig = MODAL_CONFIGS[modalToClose.category]
       const isSingleton = modalConfig.isSingleton ?? true
       if (isSingleton) {
         setSingletonModals((prev) => {
           const newSingletonModals = { ...prev }
-          delete newSingletonModals[modalToClose.type]
+          delete newSingletonModals[modalToClose.category]
           return newSingletonModals
         })
       }

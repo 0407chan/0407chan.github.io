@@ -1,9 +1,9 @@
 import React, { createContext } from 'react'
-import { ModalType } from './modalTypes'
+import { ModalCategory } from './modalDefinitions'
 
 export interface ModalConfig {
   id: string
-  type: ModalType
+  category: ModalCategory
   title?: string
   content: React.ReactNode
   className?: string
@@ -15,7 +15,9 @@ export interface ModalConfig {
 
 interface ModalContextType {
   openModal: (
-    config: Omit<ModalConfig, 'id' | 'zIndex' | 'type'> & { type: ModalType }
+    config: Omit<ModalConfig, 'id' | 'zIndex' | 'category'> & {
+      category: ModalCategory
+    }
   ) => string
   closeModal: (id: string) => void
   closeAllModals: () => void

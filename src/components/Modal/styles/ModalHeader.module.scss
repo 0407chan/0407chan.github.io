@@ -1,0 +1,47 @@
+@use '../../../styles' as *;
+
+.header {
+  height: $modal-header-height;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  @include macos-header;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-right: 16px;
+}
+
+.button {
+  @include window-control-button;
+
+  &.close {
+    background: $close-button;
+  }
+
+  &.minimize {
+    background: $minimize-button;
+  }
+
+  &.maximize {
+    background: $maximize-button;
+  }
+
+  &.disabled {
+    background: $disabled-button;
+    opacity: 0.5;
+  }
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  color: $light-text;
+
+  [data-theme='dark'] & {
+    color: $dark-text;
+  }
+}

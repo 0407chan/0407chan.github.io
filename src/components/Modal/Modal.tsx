@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import { useModal } from 'contexts/modal/useModal'
 import React, { useEffect, useState } from 'react'
-import styles from './Modal.module.scss'
+import ModalHeader from './components/ModalHeader'
+import styles from './styles/Modal.module.scss'
 
 interface ModalProps {
   modalId: string
@@ -26,8 +27,8 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const { closeModal, focusModal } = useModal()
   const [position, setPosition] = useState({
-    x: window.innerWidth / 2 - 250,
-    y: window.innerHeight / 2 - 150
+    x: window.innerWidth / 2,
+    y: window.innerHeight / 2
   })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
@@ -84,26 +85,14 @@ const Modal: React.FC<ModalProps> = ({
       }}
       onClick={() => focusModal(modalId)}
     >
-      <div className={styles.header} onMouseDown={handleMouseDown}>
-        <div className={styles.controls}>
-          <button
-            className={clsx(styles.button, styles.close)}
-            onClick={() => closeModal(modalId)}
-          />
-          <button
-            className={clsx(styles.button, styles.minimize, {
-              [styles.disabled]: disableMinimize
-            })}
-          />
-          <button
-            className={clsx(styles.button, styles.maximize, {
-              [styles.disabled]: disableMaximize
-            })}
-          />
-        </div>
-        <div className={styles.title}>{title}</div>
-      </div>
-      <div className={styles.content}>{children}</div>
+      <ModalHeader
+        title={title}
+        onClose={() => closeModal(modalId)}
+        onMouseDown={handleMouseDown}
+        disableMaximize={disableMaximize}
+        disableMinimize={disableMinimize}
+      />
+      {children}
     </div>
   )
 }

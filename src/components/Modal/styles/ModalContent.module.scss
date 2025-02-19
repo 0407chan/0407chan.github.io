@@ -1,0 +1,15 @@
+@use '../../../styles' as *;
+
+.content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  min-width: 500px;
+  min-height: 300px;
+  transition: width 0.3s ease, height 0.3s ease;
+
+  &.expanded {
+    min-width: 800px;
+    min-height: 600px;
+  }
+}

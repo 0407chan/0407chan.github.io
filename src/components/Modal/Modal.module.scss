@@ -22,9 +22,17 @@
   flex-direction: column;
   overflow: hidden;
   z-index: 2000;
+  transition: width 0.3s ease, height 0.3s ease;
 
   &:not(.focused) {
     opacity: 0.8;
+  }
+
+  &.expanded {
+    min-width: 800px;
+    min-height: 600px;
+    width: 80vw;
+    height: 80vh;
   }
 }
 

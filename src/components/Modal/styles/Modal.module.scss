@@ -1,0 +1,15 @@
+@use '../../../styles' as *;
+
+.modal {
+  position: absolute;
+  top: 0;
+  @include macos-window;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 2000;
+
+  &:not(.focused) {
+    opacity: 0.8;
+  }
+}

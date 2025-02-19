@@ -1,7 +1,7 @@
 import { DefaultMantineColor, Tooltip, TransitionProps } from '@mantine/core'
 import ModalContent from 'components/Modal/components/ModalContent'
 import { IMAGES } from 'constants/image'
-import { ModalCategory, ModalVariant } from 'contexts/modal/modalDefinitions'
+import { ModalCategory } from 'contexts/modal/modalDefinitions'
 import { useModal } from 'contexts/modal/useModal'
 import styles from './Dock.module.scss'
 
@@ -30,8 +30,46 @@ const Dock = () => {
             openModal({
               category: ModalCategory.PROJECT_MONOTASK,
               content: (
-                <ModalContent variant={ModalVariant.EXPANDED}>
-                  test
+                <ModalContent>
+                  <ModalContent.Sidebar>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                    <div>사이드바</div>
+                  </ModalContent.Sidebar>
+                  <ModalContent.Main>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                    <div>메인</div>
+                  </ModalContent.Main>
                 </ModalContent>
               )
             })
@@ -46,11 +84,7 @@ const Dock = () => {
           onClick={() =>
             openModal({
               category: ModalCategory.PROJECT_RESPRING,
-              content: (
-                <ModalContent variant={ModalVariant.EXPANDED}>
-                  test
-                </ModalContent>
-              )
+              content: <ModalContent>test</ModalContent>
             })
           }
         >
@@ -63,11 +97,7 @@ const Dock = () => {
           onClick={() =>
             openModal({
               category: ModalCategory.PROJECT_ZEMO,
-              content: (
-                <ModalContent variant={ModalVariant.EXPANDED}>
-                  test
-                </ModalContent>
-              )
+              content: <ModalContent>test</ModalContent>
             })
           }
         >

@@ -7,22 +7,12 @@
   min-width: 500px;
   min-height: 300px;
   transition: width 0.3s ease, height 0.3s ease;
-
-  &.expanded {
-    min-width: 800px;
-    min-height: 600px;
-  }
 }
 
 .sidebar {
-  width: 240px;
+  width: 220px;
   background-color: rgba(0, 0, 0, 0.05);
-  padding: 16px;
   overflow-y: auto;
-
-  &.expanded {
-    width: 320px;
-  }
 
   [data-theme='dark'] & {
     background-color: rgba(255, 255, 255, 0.05);
@@ -32,7 +22,6 @@
 .main {
   flex: 1;
   overflow-y: auto;
-  padding: 16px;
   background-color: rgba(0, 0, 0, 0.02);
 
   [data-theme='dark'] & {

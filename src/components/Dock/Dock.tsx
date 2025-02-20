@@ -1,5 +1,7 @@
 import { DefaultMantineColor, Tooltip, TransitionProps } from '@mantine/core'
 import ModalContent from 'components/Modal/components/ModalContent'
+import ProjectModal from 'components/modals/ProjectModal'
+import RespringModal from 'components/modals/RespringModal'
 import { IMAGES } from 'constants/image'
 import { ModalCategory } from 'contexts/modal/modalDefinitions'
 import { useModal } from 'contexts/modal/useModal'
@@ -19,6 +21,15 @@ const COMMON_TOOLTIP_PROPS = {
     }
   }
 }
+
+const project = {
+  id: '1',
+  name: 'Monotask',
+  description:
+    'Monotask is a task management app that helps you stay on top of your tasks. awefawefawjlfkasdjfiawejfpiwaejfipawejfipawjefpiajwepifjweaipfjawepifjawepifjp',
+  image: IMAGES.SERVICE.MONOTASK
+}
+
 const Dock = () => {
   const { openModal } = useModal()
   return (
@@ -29,49 +40,7 @@ const Dock = () => {
           onClick={() =>
             openModal({
               category: ModalCategory.PROJECT_MONOTASK,
-              content: (
-                <ModalContent>
-                  <ModalContent.Sidebar>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                    <div>사이드바</div>
-                  </ModalContent.Sidebar>
-                  <ModalContent.Main>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                    <div>메인</div>
-                  </ModalContent.Main>
-                </ModalContent>
-              )
+              content: <ProjectModal project={project} />
             })
           }
         >
@@ -84,7 +53,7 @@ const Dock = () => {
           onClick={() =>
             openModal({
               category: ModalCategory.PROJECT_RESPRING,
-              content: <ModalContent>test</ModalContent>
+              content: <RespringModal />
             })
           }
         >

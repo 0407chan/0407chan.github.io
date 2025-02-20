@@ -30,8 +30,12 @@ const Modal: React.FC<ModalProps> = ({
   const { closeModal, focusModal } = useModal()
   const modalRef = useRef<HTMLDivElement>(null)
   const [modalSize, setModalSize] = useState({ width: 0, height: 0 })
+  const [isPositioned, setIsPositioned] = useState(false)
   const [position, setPosition] = useState(() => {
-    if (initialPosition) return initialPosition
+    if (initialPosition) {
+      setIsPositioned(true)
+      return initialPosition
+    }
 
     return {
       x: window.innerWidth / 2,
@@ -53,6 +57,7 @@ const Modal: React.FC<ModalProps> = ({
           x: window.innerWidth / 2 - width / 2,
           y: window.innerHeight / 2 - height / 2
         })
+        setIsPositioned(true)
       }
     }
   }, [initialPosition])
@@ -105,7 +110,9 @@ const Modal: React.FC<ModalProps> = ({
         [styles.focused]: isFocused
       })}
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
+        visibility: isPositioned ? 'visible' : 'hidden',
+        top: `${position.y}px`,
+        left: `${position.x}px`,
         ...style
       }}
       onClick={() => focusModal(modalId)}

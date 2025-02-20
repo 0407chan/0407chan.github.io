@@ -24,6 +24,10 @@ interface ModalContextType {
   closeAllModals: () => void
   focusModal: (id: string) => void
   getTopZIndex: () => number
+  saveModalPosition: (
+    category: ModalCategory,
+    position: { x: number; y: number }
+  ) => void
 }
 
 export const ModalContext = createContext<ModalContextType>({
@@ -31,5 +35,6 @@ export const ModalContext = createContext<ModalContextType>({
   closeModal: () => {},
   closeAllModals: () => {},
   focusModal: () => {},
-  getTopZIndex: () => 2000
+  getTopZIndex: () => 2000,
+  saveModalPosition: () => {}
 })

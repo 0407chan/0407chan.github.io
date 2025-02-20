@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { ModalCategory } from 'contexts/modal/modalDefinitions'
 import { useModal } from 'contexts/modal/useModal'
 import React, { useEffect, useRef, useState } from 'react'
 import ModalHeader from './components/ModalHeader'
@@ -14,6 +15,7 @@ interface ModalProps {
   disableMaximize?: boolean
   disableMinimize?: boolean
   initialPosition?: { x: number; y: number }
+  category: ModalCategory
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -25,9 +27,10 @@ const Modal: React.FC<ModalProps> = ({
   isFocused = true,
   disableMaximize = false,
   disableMinimize = false,
-  initialPosition
+  initialPosition,
+  category
 }) => {
-  const { closeModal, focusModal } = useModal()
+  const { closeModal, focusModal, saveModalPosition } = useModal()
   const modalRef = useRef<HTMLDivElement>(null)
   const [modalSize, setModalSize] = useState({ width: 0, height: 0 })
   const [isPositioned, setIsPositioned] = useState(false)
@@ -80,10 +83,13 @@ const Modal: React.FC<ModalProps> = ({
       const maxX = window.innerWidth - modalSize.width
       const maxY = window.innerHeight - modalSize.height
 
-      setPosition({
+      const newPosition = {
         x: Math.min(Math.max(0, newX), maxX),
         y: Math.min(Math.max(0, newY), maxY)
-      })
+      }
+
+      setPosition(newPosition)
+      saveModalPosition(category, newPosition)
     }
   }
 

@@ -1,4 +1,6 @@
 import Modal from 'components/Modal'
+import { STORAGE_KEYS } from 'constants/storage'
+import { useStorageState } from 'hooks/useStorageState'
 import React, { useCallback, useState } from 'react'
 import { ModalConfig, ModalContext } from './ModalContext'
 import { MODAL_CONFIGS, MODAL_TITLES, ModalCategory } from './modalDefinitions'
@@ -13,6 +15,14 @@ interface ModalProviderProps {
 export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [modals, setModals] = useState<{ [key: string]: ModalConfig }>({})
   const [focusedId, setFocusedId] = useState<string | null>(null)
+  const { state: modalPositions, setState: setModalPositions } =
+    useStorageState<{
+      [key in ModalCategory]?: { x: number; y: number }
+    }>({
+      storageKey: STORAGE_KEYS.MODAL_POSITIONS,
+      initialValue: {},
+      storageType: 'local'
+    })
   const [singletonModals, setSingletonModals] = useState<{
     [key in ModalCategory]?: string
   }>({})
@@ -39,6 +49,16 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     [focusedId, getTopZIndex, modals]
   )
 
+  const saveModalPosition = useCallback(
+    (category: ModalCategory, position: { x: number; y: number }) => {
+      setModalPositions((prev) => ({
+        ...prev,
+        [category]: position
+      }))
+    },
+    []
+  )
+
   const openModal = useCallback(
     (
       config: Omit<ModalConfig, 'id' | 'zIndex' | 'category'> & {
@@ -60,6 +80,9 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       const id = generateId()
       const newZIndex = getTopZIndex()
 
+      // 이전 위치 정보 확인
+      const savedPosition = modalPositions[config.category]
+
       // 싱글톤 모달인 경우 ID 저장
       if (isSingleton) {
         setSingletonModals((prev) => ({
@@ -77,13 +100,14 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           title: config.title || MODAL_TITLES[config.category],
           className: `${modalConfig.defaultClassName || ''} ${
             config.className || ''
-          }`
+          }`,
+          initialPosition: savedPosition || config.initialPosition
         }
       }))
       setFocusedId(id)
       return id
     },
-    [getTopZIndex, focusModal, modals]
+    [getTopZIndex, focusModal, modals, modalPositions]
   )
 
   const closeModal = useCallback(
@@ -126,7 +150,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         closeModal,
         closeAllModals,
         focusModal,
-        getTopZIndex
+        getTopZIndex,
+        saveModalPosition
       }}
     >
       {children}
@@ -138,6 +163,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           style={{ zIndex: modalConfig.zIndex }}
           isFocused={focusedId === modalConfig.id}
           initialPosition={modalConfig.initialPosition}
+          category={modalConfig.category}
         >
           {modalConfig.content}
         </Modal>

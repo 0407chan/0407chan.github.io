@@ -1,0 +1,3 @@
+export const STORAGE_KEYS = {
+  MODAL_POSITIONS: 'MODAL_POSITIONS'
+}

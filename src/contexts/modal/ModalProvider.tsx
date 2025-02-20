@@ -1,8 +1,8 @@
 import Modal from 'components/Modal'
 import { STORAGE_KEYS } from 'constants/storage'
 import { useStorageState } from 'hooks/useStorageState'
-import React, { useCallback, useState } from 'react'
-import { ModalConfig, ModalContext } from './ModalContext'
+import React, { useCallback, useEffect, useState } from 'react'
+import { ModalConfig, ModalContext, ModalOpenConfig } from './ModalContext'
 import { MODAL_CONFIGS, MODAL_TITLES, ModalCategory } from './modalDefinitions'
 
 const generateId = () =>
@@ -26,6 +26,26 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [singletonModals, setSingletonModals] = useState<{
     [key in ModalCategory]?: string
   }>({})
+
+  // 모달 설정을 매 렌더링마다 갱신
+  const updatedModals = Object.entries(modals).reduce((acc, [id, modal]) => {
+    const modalConfig = MODAL_CONFIGS[modal.category]
+    acc[id] = {
+      ...modal,
+      title: modal.title || MODAL_TITLES[modal.category],
+      className: `${modalConfig.defaultClassName || ''} ${
+        modal.className || ''
+      }`
+    }
+    return acc
+  }, {} as typeof modals)
+
+  // 모달 설정이 변경된 경우에만 상태 업데이트
+  useEffect(() => {
+    if (JSON.stringify(modals) !== JSON.stringify(updatedModals)) {
+      setModals(updatedModals)
+    }
+  }, [])
 
   const getTopZIndex = useCallback(() => {
     const modalCount = Object.keys(modals).length
@@ -60,11 +80,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   )
 
   const openModal = useCallback(
-    (
-      config: Omit<ModalConfig, 'id' | 'zIndex' | 'category'> & {
-        category: ModalCategory
-      }
-    ) => {
+    (config: ModalOpenConfig) => {
       const modalConfig = MODAL_CONFIGS[config.category]
       const isSingleton = modalConfig.isSingleton ?? true
 
@@ -80,6 +96,12 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       const id = generateId()
       const newZIndex = getTopZIndex()
 
+      // content를 함수로 변환
+      const contentFactory =
+        typeof config.content === 'function'
+          ? config.content
+          : () => config.content
+
       // 이전 위치 정보 확인
       const savedPosition = modalPositions[config.category]
 
@@ -91,18 +113,23 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         }))
       }
 
+      const newModal: ModalConfig = {
+        id,
+        category: config.category,
+        contentFactory: contentFactory as () => React.ReactNode,
+        title: config.title || MODAL_TITLES[config.category],
+        className: `${modalConfig.defaultClassName || ''} ${
+          config.className || ''
+        }`,
+        initialPosition: savedPosition || config.initialPosition,
+        disableMaximize: config.disableMaximize,
+        disableMinimize: config.disableMinimize,
+        zIndex: newZIndex
+      }
+
       setModals((prev) => ({
         ...prev,
-        [id]: {
-          ...config,
-          id,
-          zIndex: newZIndex,
-          title: config.title || MODAL_TITLES[config.category],
-          className: `${modalConfig.defaultClassName || ''} ${
-            config.className || ''
-          }`,
-          initialPosition: savedPosition || config.initialPosition
-        }
+        [id]: newModal
       }))
       setFocusedId(id)
       return id
@@ -155,19 +182,26 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       }}
     >
       {children}
-      {Object.values(modals).map((modalConfig) => (
-        <Modal
-          key={modalConfig.id}
-          modalId={modalConfig.id}
-          {...modalConfig}
-          style={{ zIndex: modalConfig.zIndex }}
-          isFocused={focusedId === modalConfig.id}
-          initialPosition={modalConfig.initialPosition}
-          category={modalConfig.category}
-        >
-          {modalConfig.content}
-        </Modal>
-      ))}
+      {Object.entries(modals).map(([id, modalConfig]) => {
+        const config = MODAL_CONFIGS[modalConfig.category]
+        return (
+          <Modal
+            key={modalConfig.id}
+            modalId={modalConfig.id}
+            {...modalConfig}
+            style={{ zIndex: modalConfig.zIndex }}
+            isFocused={focusedId === modalConfig.id}
+            initialPosition={modalConfig.initialPosition}
+            category={modalConfig.category}
+            title={modalConfig.title || MODAL_TITLES[modalConfig.category]}
+            className={`${config.defaultClassName || ''} ${
+              modalConfig.className || ''
+            }`}
+          >
+            {modalConfig.contentFactory()}
+          </Modal>
+        )
+      })}
     </ModalContext.Provider>
   )
 }

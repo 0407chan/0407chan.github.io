@@ -1,25 +1,35 @@
-import React, { createContext } from 'react'
+import { createContext } from 'react'
 import { ModalCategory } from './modalDefinitions'
 
 export interface ModalConfig {
   id: string
   category: ModalCategory
   title?: string
-  content: React.ReactNode
+  contentFactory: () => React.ReactNode
   className?: string
   zIndex?: number
   initialPosition?: { x: number; y: number }
+  disableMaximize?: boolean
+  disableMinimize?: boolean
+}
 
+export interface ModalContentProps {
+  category: ModalCategory
+  modalId: string
+}
+
+export interface ModalOpenConfig {
+  category: ModalCategory
+  content: React.ReactNode | (() => React.ReactNode)
+  title?: string
+  className?: string
+  initialPosition?: { x: number; y: number }
   disableMaximize?: boolean
   disableMinimize?: boolean
 }
 
 interface ModalContextType {
-  openModal: (
-    config: Omit<ModalConfig, 'id' | 'zIndex' | 'category'> & {
-      category: ModalCategory
-    }
-  ) => string
+  openModal: (config: ModalOpenConfig) => string
   closeModal: (id: string) => void
   closeAllModals: () => void
   focusModal: (id: string) => void

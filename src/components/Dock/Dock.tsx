@@ -1,10 +1,9 @@
 import { DefaultMantineColor, Tooltip, TransitionProps } from '@mantine/core'
-import ModalContent from 'components/Modal/components/ModalContent'
 import ProjectModal from 'components/modals/ProjectModal'
-import RespringModal from 'components/modals/RespringModal'
 import { IMAGES } from 'constants/image'
 import { ModalCategory } from 'contexts/modal/modalDefinitions'
 import { useModal } from 'contexts/modal/useModal'
+import { Project } from 'types'
 import styles from './Dock.module.scss'
 
 const COMMON_TOOLTIP_PROPS = {
@@ -22,57 +21,53 @@ const COMMON_TOOLTIP_PROPS = {
   }
 }
 
-const project = {
-  id: '1',
-  name: 'Monotask',
-  description:
-    'Monotask is a task management app that helps you stay on top of your tasks. awefawefawjlfkasdjfiawejfpiwaejfipawejfipawjefpiajwepifjweaipfjawepifjawepifjp',
-  image: IMAGES.SERVICE.MONOTASK
-}
+const projects: Project[] = [
+  {
+    id: '1',
+    name: 'Monotask',
+    description:
+      'Monotask is a task management app that helps you stay on top of your tasks. awefawefawjlfkasdjfiawejfpiwaejfipawejfipawjefpiajwepifjweaipfjawepifjawepifjp',
+    image: IMAGES.SERVICE.MONOTASK,
+    category: ModalCategory.PROJECT_MONOTASK
+  },
+  {
+    id: '2',
+    name: 'Respring',
+    description:
+      'Respring is a task management app that helps you stay on top of your tasks.',
+    image: IMAGES.SERVICE.RESPRING,
+    category: ModalCategory.PROJECT_RESPRING
+  },
+  {
+    id: '3',
+    name: 'Zemo',
+    description:
+      'Zemo is a task management app that helps you stay on top of your tasks.',
+    image: IMAGES.SERVICE.ZEMO,
+    category: ModalCategory.PROJECT_ZEMO
+  }
+]
 
 const Dock = () => {
   const { openModal } = useModal()
   return (
     <div className={styles.dock}>
-      <Tooltip label="Monotask" {...COMMON_TOOLTIP_PROPS}>
-        <div
-          className={styles.icon}
-          onClick={() =>
-            openModal({
-              category: ModalCategory.PROJECT_MONOTASK,
-              content: <ProjectModal project={project} />
-            })
-          }
-        >
-          <img src={IMAGES.SERVICE.MONOTASK} alt="monotask" />
-        </div>
-      </Tooltip>
-      <Tooltip label="Respring" {...COMMON_TOOLTIP_PROPS}>
-        <div
-          className={styles.icon}
-          onClick={() =>
-            openModal({
-              category: ModalCategory.PROJECT_RESPRING,
-              content: <RespringModal />
-            })
-          }
-        >
-          <img src={IMAGES.SERVICE.RESPRING} alt="respring" />
-        </div>
-      </Tooltip>
-      <Tooltip label="Zemo" {...COMMON_TOOLTIP_PROPS}>
-        <div
-          className={styles.icon}
-          onClick={() =>
-            openModal({
-              category: ModalCategory.PROJECT_ZEMO,
-              content: <ModalContent>test</ModalContent>
-            })
-          }
-        >
-          <img src={IMAGES.SERVICE.ZEMO} alt="zemo" />
-        </div>
-      </Tooltip>
+      {projects.map((project) => (
+        <Tooltip label={project.name} {...COMMON_TOOLTIP_PROPS}>
+          <div
+            key={project.id}
+            className={styles.icon}
+            onClick={() =>
+              openModal({
+                category: project.category,
+                content: <ProjectModal project={project} />
+              })
+            }
+          >
+            <img src={project.image} alt={project.name} />
+          </div>
+        </Tooltip>
+      ))}
     </div>
   )
 }
